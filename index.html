@@ -1,811 +1,118 @@
 <!doctype html>
 <html lang="id">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>Sosialisasi Ruang Generus</title>
-    <style>
-      * {
-        box-sizing: border-box;
-      }
-      body {
-        margin: 0;
-        background: #14241a;
-        font-family: Arial, sans-serif;
-        color: #193328;
-      }
-      #stage {
-        height: 100vh;
-        display: grid;
-        place-items: center;
-        overflow: hidden;
-      }
-      #deck {
-        width: 1200px;
-        height: 675px;
-        transform-origin: center;
-        position: relative;
-      }
-      .slide {
-        position: absolute;
-        inset: 0;
-        background: #fff;
-        border-radius: 16px;
-        padding: 58px 72px;
-        display: none;
-        flex-direction: column;
-        overflow: hidden;
-      }
-      .slide.on {
-        display: flex;
-      }
-      .green {
-        background: linear-gradient(130deg, #0b6639, #159052);
-        color: white;
-        justify-content: center;
-      }
-      .green p,
-      .green h1 {
-        color: white;
-      }
-      .eyebrow {
-        font-size: 16px;
-        letter-spacing: 2px;
-        text-transform: uppercase;
-        color: #13834b;
-        font-weight: bold;
-        margin: 0 0 18px;
-      }
-      .green .eyebrow {
-        color: #c2f2d6;
-      }
-      h1 {
-        font-size: 72px;
-        line-height: 1.05;
-        margin: 0 0 22px;
-      }
-      h2 {
-        font-size: 46px;
-        color: #0e713f;
-        margin: 0 0 24px;
-      }
-      h3 {
-        font-size: 25px;
-        margin: 0 0 10px;
-        color: #0e713f;
-      }
-      p,
-      li {
-        font-size: 25px;
-        line-height: 1.45;
-        margin: 0 0 14px;
-      }
-      .sub {
-        font-size: 29px;
-        max-width: 900px;
-      }
-      .muted {
-        color: #5c7264;
-      }
-      .cards {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 22px;
-        margin-top: 18px;
-      }
-      .card {
-        background: #f0f8f3;
-        border-radius: 18px;
-        padding: 30px;
-        min-height: 220px;
-      }
-      .card p {
-        font-size: 21px;
-      }
-      .icon {
-        font-size: 38px;
-        margin-bottom: 16px;
-      }
-      .split {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 48px;
-        align-items: center;
-        flex: 1;
-      }
-      .list {
-        padding-left: 30px;
-      }
-      .list li {
-        margin-bottom: 18px;
-      }
-      .pill {
-        display: inline-block;
-        background: #e4f6e9;
-        border-radius: 40px;
-        padding: 12px 22px;
-        font-weight: bold;
-        color: #0b713c;
-        font-size: 23px;
-      }
-      .footer {
-        position: absolute;
-        bottom: 25px;
-        left: 72px;
-        right: 72px;
-        display: flex;
-        justify-content: space-between;
-        gap: 20px;
-        color: #668575;
-        font-size: 15px;
-      }
-      .green .footer {
-        color: #c5efda;
-      }
-      .step {
-        display: flex;
-        gap: 20px;
-        align-items: flex-start;
-        margin: 0 0 26px;
-        font-size: 25px;
-        line-height: 1.35;
-      }
-      .number {
-        flex: none;
-        border-radius: 50%;
-        background: #118349;
-        color: #fff;
-        width: 46px;
-        height: 46px;
-        display: grid;
-        place-items: center;
-        font-weight: bold;
-      }
-      .note {
-        background: #fff7df;
-        border-left: 6px solid #e3a72b;
-        padding: 18px 22px;
-        border-radius: 9px;
-        font-size: 21px;
-      }
-      .center {
-        align-items: center;
-        text-align: center;
-      }
-      .center p {
-        max-width: 830px;
-      }
-      .green .pill {
-        background: #ffffff29;
-        color: white;
-      }
-      .brand {
-        display: flex;
-        align-items: center;
-        gap: 13px;
-        margin-bottom: 42px;
-        color: white;
-        font-size: 29px;
-        letter-spacing: 2px;
-      }
-      .brand-logo {
-        width: 76px;
-        height: 76px;
-        object-fit: contain;
-        border-radius: 50%;
-        background: white;
-        padding: 3px;
-      }
-      .screenshot {
-        height: 490px;
-        width: 245px;
-        margin: auto;
-        overflow: hidden;
-        border: 7px solid #193328;
-        border-radius: 27px;
-        box-shadow: 0 20px 35px #0003;
-        background: white;
-      }
-      .screenshot img {
-        display: block;
-        width: 100%;
-        height: 100%;
-        object-fit: contain;
-      }
-      /* Penyesuaian lokal: gambar utuh tanpa bingkai ponsel tambahan. */
-      .slide.intro .screenshot {
-        height: 420px;
-        width: 210px;
-      }
-      .demo {
-        padding-top: 42px;
-      }
-      .demo h2 {
-        font-size: 42px;
-        margin-bottom: 18px;
-      }
-      .demo .eyebrow {
-        margin-bottom: 12px;
-      }
-      .demo .split {
-        grid-template-columns: minmax(0, 1fr) 290px;
-        gap: 44px;
-        flex: none;
-        height: 470px;
-      }
-      .demo .step {
-        font-size: 24px;
-        margin-bottom: 22px;
-      }
-      .demo .note {
-        font-size: 20px;
-      }
-      .real-shot {
-        width: 260px;
-        height: 470px;
-        margin: 0 auto;
-        border: 0;
-        border-radius: 0;
-        background: transparent;
-        box-shadow: none;
-        position: relative;
-        display: grid;
-        place-items: center;
-      }
-      .real-shot img {
-        height: 100%;
-        width: 100%;
-        object-fit: contain;
-        filter: drop-shadow(0 8px 10px #0002);
-      }
-      .real-shot img:not([src]) {
-        display: none;
-      }
-      .missing {
-        width: 240px;
-        border: 2px dashed #96b5a3;
-        border-radius: 18px;
-        padding: 28px 20px;
-        text-align: center;
-        background: #f0f8f3;
-        color: #426951;
-        font-size: 19px;
-        line-height: 1.5;
-      }
-      .missing strong {
-        display: block;
-        margin-bottom: 12px;
-      }
-      .real-shot:has(img[src]) .missing {
-        display: none;
-      }
-      .review-note {
-        font-size: 15px;
-        margin-top: 12px;
-      }
-      #controls {
-        position: fixed;
-        bottom: 10px;
-        left: 50%;
-        transform: translateX(-50%);
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        color: #fff;
-        font-size: 14px;
-        white-space: nowrap;
-      }
-      button {
-        border: 0;
-        border-radius: 8px;
-        padding: 9px 15px;
-        cursor: pointer;
-        background: #ffffff30;
-        color: #fff;
-        font-size: 18px;
-      }
-      button:disabled {
-        opacity: 0.35;
-        cursor: default;
-      }
-      button:focus-visible {
-        outline: 3px solid #e3a72b;
-      }
-      #editor {
-        position: fixed;
-        inset: 20px 20px auto auto;
-        width: min(440px, calc(100vw - 40px));
-        padding: 24px;
-        background: white;
-        color: #193328;
-        box-shadow: 0 10px 60px #0008;
-        border-radius: 16px;
-        z-index: 5;
-        font-size: 16px;
-        max-height: 85vh;
-        overflow: auto;
-      }
-      #editor[hidden] {
-        display: none;
-      }
-      #editor p {
-        font-size: 16px;
-      }
-      #editor label {
-        display: block;
-        margin: 15px 0;
-      }
-      #editor input {
-        display: block;
-        margin-top: 8px;
-        max-width: 100%;
-      }
-      #editor button {
-        background: #0e713f;
-        margin: 4px 0;
-        font-size: 16px;
-      }
-      #status {
-        font-size: 14px;
-        line-height: 1.5;
-        margin-top: 12px;
-      }
-      @media print {
-        @page {
-          size: 1200px 675px;
-          margin: 0;
-        }
-        body {
-          background: white;
-        }
-        #controls,
-        #editor {
-          display: none !important;
-        }
-        #stage {
-          height: auto;
-          display: block;
-        }
-        #deck {
-          transform: none !important;
-          height: auto;
-        }
-        .slide {
-          position: relative;
-          display: flex !important;
-          width: 1200px;
-          height: 675px;
-          border-radius: 0;
-          break-after: page;
-          print-color-adjust: exact;
-          -webkit-print-color-adjust: exact;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <div id="stage">
-      <main id="deck">
-        <section class="slide green on">
-          <div class="brand">
-            <img
-              class="brand-logo"
-              src="https://storage.googleapis.com/dall-e-images/E3G90xa7WyXFqQ1RIKb6wLoM8qB2%2F569bae39-bd1c-47fd-b72d-bebc39a51b9b.png"
-              alt="Logo LDII"
-            /><strong>LDII</strong>
-          </div>
-          <div class="eyebrow">
-            Sosialisasi web app · LDII Kelompok 5 Tambun
-          </div>
-          <h1>Ruang Generus</h1>
-          <p class="sub">
-            Memudahkan sambung jama'ah melalui jadwal dan presensi pengajian
-            rutin, menuju kegiatan yang lebih tertata di era digital.
-          </p>
-          <div class="footer">
-            <span>Dikembangkan oleh Tim 4S Desa</span><span>01 / 06</span>
-          </div>
-        </section>
-        <section class="slide intro">
-          <div class="eyebrow">Perkenalan</div>
-          <h2>Satu tempat untuk kegiatan kita</h2>
-          <div class="split">
-            <div>
-              <p>
-                <strong>Ruang Generus</strong> adalah website yang dibangun oleh
-                <strong>Tim 4S Desa</strong> untuk mendukung kegiatan jama'ah
-                secara digital.
-              </p>
-              <p class="muted">
-                Dapat diakses melalui ponsel; tampilan di samping mengacu pada
-                aplikasi Satu Generus.
-              </p>
-              <span class="pill"
-                >Fokus: jadwal • presensi • informasi kegiatan</span
-              >
-            </div>
-            <div class="screenshot">
-              <img
-                src="https://storage.googleapis.com/dall-e-images/E3G90xa7WyXFqQ1RIKb6wLoM8qB2%2Fcc4d03ea-084c-425f-801a-6fc7d136d727.png"
-                alt="Tampilan aplikasi Satu Generus: menu presensi, keluarga dan ringkasan bulan ini"
-              />
-            </div>
-          </div>
-          <div class="footer">
-            <span
-              >Ilustrasi ulang dari tangkapan layar; data pribadi perlu
-              disamarkan sebelum ditampilkan umum.</span
-            ><span>02 / 06</span>
-          </div>
-        </section>
-        <section class="slide demo">
-          <div class="eyebrow">Demo alur</div>
-          <h2>Cara menggunakan: langkah awal</h2>
-          <div class="split">
-            <div>
-              <div class="step">
-                <span class="number">1</span
-                ><span
-                  >Buka browser, lalu ketik
-                  <strong>satugenerus.com</strong>.</span
-                >
-              </div>
-              <div class="step">
-                <span class="number">2</span
-                ><span
-                  ><strong>Kepala keluarga</strong> masuk dengan email atau
-                  nomor telepon yang tercatat dalam sensus jama'ah.</span
-                >
-              </div>
-              <div class="step">
-                <span class="number">3</span
-                ><span
-                  >Masukkan password awal <strong>yang telah diberikan</strong>,
-                  kemudian klik <strong>Masuk ke Akun</strong>.</span
-                >
-              </div>
-              <div class="note">
-                Setelah masuk, buka <strong>Beranda</strong> untuk melihat
-                jadwal pengajian.
-              </div>
-            </div>
-            <div class="screenshot real-shot">
-              <img
-                id="login-shot"
-                src="./satugenerus.com_2026-11-21_00-58-28.png"
-                onerror="
-                  if (!this.dataset.fallback) {
-                    this.dataset.fallback = '1';
-                    this.src =
-                      'https://raw.githubusercontent.com/ayyunnan/rugen/HEAD/satugenerus.com_2026-11-21_00-58-28.png';
-                  }
-                "
-                alt="Tangkapan layar asli halaman login Satu Generus"
-              />
-              <div class="missing">
-                <strong>Screenshot login belum disematkan</strong>Pilih berkas
-                asli <b>1.png</b> melalui tombol Gambar.
-              </div>
-            </div>
-          </div>
-          <div class="footer">
-            <span>Akses akun hanya untuk kepala keluarga.</span
-            ><span>03 / 06</span>
-          </div>
-        </section>
-        <section class="slide demo">
-          <div class="eyebrow">Demo alur</div>
-          <h2>Presensi &amp; ringkasan kehadiran</h2>
-          <div class="split">
-            <div>
-              <div class="step">
-                <span class="number">1</span
-                ><span
-                  >Buka menu <strong>Presensi</strong> untuk pengajian yang
-                  berlangsung.</span
-                >
-              </div>
-              <div class="step">
-                <span class="number">2</span
-                ><span
-                  >Catat status: <strong>Hadir</strong>, <strong>Izin</strong>,
-                  atau <strong>Sakit</strong>.</span
-                >
-              </div>
-              <div class="step">
-                <span class="number">3</span
-                ><span
-                  >Kepala keluarga dapat mengajukan izin untuk anggota keluarga
-                  yang berhalangan hadir.</span
-                >
-              </div>
-              <div class="note">
-                <strong>Pantau kehadiran</strong><br />Periksa catatan presensi
-                dan <strong>ringkasan kehadiran</strong> melalui website.
-              </div>
-              <p class="muted review-note">
-                Saat demo, jangan tampilkan identitas maupun data pribadi
-                jama'ah.
-              </p>
-            </div>
-            <div class="screenshot real-shot">
-              <img
-                id="attendance-shot"
-                src="./satugenerus.com_2026-11-21_02-05-52.png"
-                onerror="
-                  if (!this.dataset.fallback) {
-                    this.dataset.fallback = '1';
-                    this.src =
-                      'https://raw.githubusercontent.com/ayyunnan/rugen/HEAD/satugenerus.com_2026-11-21_02-05-52.png';
-                  }
-                "
-                alt="Tangkapan layar asli halaman Presensi Pengajian Satu Generus"
-              />
-              <div class="missing">
-                <strong>Screenshot presensi belum disematkan</strong>Pilih
-                berkas asli <b>2.png</b> melalui tombol Gambar.
-              </div>
-            </div>
-          </div>
-          <div class="footer">
-            <span>Pilih status sesuai keadaan sebenarnya.</span
-            ><span>04 / 06</span>
-          </div>
-        </section>
-        <section class="slide">
-          <div class="eyebrow">Ajakan bersama</div>
-          <h2>Mulai dari langkah kecil</h2>
-          <div class="cards">
-            <div class="card">
-              <div class="icon">👤</div>
-              <h3>Kepala keluarga</h3>
-              <p>
-                Masuk ke website, cek jadwal, dan bantu catat izin keluarga yang
-                berhalangan.
-              </p>
-            </div>
-            <div class="card">
-              <div class="icon">🙋</div>
-              <h3>Pengurus</h3>
-              <p>
-                Dampingi yang belum terbiasa dan bantu jika ada kendala
-                penggunaan.
-              </p>
-            </div>
-            <div class="card">
-              <div class="icon">🛠️</div>
-              <h3>Tim 4S Desa</h3>
-              <p>
-                Terima masukan agar aplikasi terus lebih bermanfaat bagi
-                jama'ah.
-              </p>
-            </div>
-          </div>
-          <div class="footer">
-            <span>Digitalisasi berhasil jika digunakan bersama-sama.</span
-            ><span>05 / 06</span>
-          </div>
-        </section>
-        <section class="slide green center">
-          <div class="eyebrow">Penutup</div>
-          <h1>Mari sambung jama'ah,<br />lebih mudah dan tertata.</h1>
-          <span
-            class="pill"
-            lang="ar"
-            dir="rtl"
-            style="font-size: 32px; margin-top: 26px"
-            >الحمد لله جزاكم الله خيرا</span
-          >
-          <div class="footer">
-            <span>LDII Kelompok 5 Tambun · Tim 4S Desa</span
-            ><span>06 / 06</span>
-          </div>
-        </section>
-      </main>
-    </div>
-    <div id="controls">
-      <button id="prev" aria-label="Slide sebelumnya">←</button
-      ><span id="count">1 / 6</span
-      ><button id="next" aria-label="Slide berikutnya">→</button
-      ><button id="full" aria-label="Layar penuh">⛶</button
-      ><button id="images">Gambar</button>
-    </div>
-    <aside id="editor" hidden aria-label="Sematkan gambar asli">
-      <h3>Screenshot asli</h3>
-      <p>
-        Slide 3 dan 4 memakai berkas PNG dari repositori ayyunnan/rugen. Simpan
-        HTML di folder yang sama dengan kedua gambar. Pemilih berkas di bawah
-        hanya diperlukan jika ingin mengganti gambar atau menyematkannya untuk
-        penggunaan luring.
-      </p>
-      <label
-        >Slide 3 — login<input
-          type="file"
-          accept="image/png,image/jpeg,image/webp"
-          data-target="login-shot"
-      /></label>
-      <label
-        >Slide 4 — presensi<input
-          type="file"
-          accept="image/png,image/jpeg,image/webp"
-          data-target="attendance-shot"
-      /></label>
-      <details>
-        <summary>Aset lama: logo &amp; ilustrasi slide 2</summary>
-        <p>
-          Saat ekspor, gambar lama dicoba disematkan otomatis. Jika akses sumber
-          diblokir, pilih salinan gambar aslinya di sini agar hasil tetap
-          mandiri.
-        </p>
-        <label
-          >Logo cover<input
-            type="file"
-            accept="image/png,image/jpeg,image/webp"
-            data-selector=".brand-logo" /></label
-        ><label
-          >Ilustrasi slide 2<input
-            type="file"
-            accept="image/png,image/jpeg,image/webp"
-            data-selector=".intro img"
-        /></label>
-      </details>
-      <p>
-        Screenshot presensi memuat nama jama'ah. Pastikan izin publikasinya
-        sebelum commit ke repositori publik.
-      </p>
-      <button id="save">Unduh HTML dengan gambar tertanam</button>
-      <button id="close-editor">Tutup</button>
-      <div id="status" role="status" aria-live="polite">
-        Screenshot sudah ditautkan ke berkas PNG repositori, bukan ditanam
-        sebagai data biner. Logo dan ilustrasi lama tetap memakai URL asal.
-        Tidak perlu memilih gambar lagi untuk publikasi GitHub Pages.
-      </div>
-    </aside>
-    <script>
-      const deck = document.getElementById("deck"),
-        slides = [...document.querySelectorAll(".slide")];
-      let current = 0;
-      const editor = document.getElementById("editor"),
-        statusBox = document.getElementById("status");
-      function fit() {
-        deck.style.transform = `scale(${Math.max(0.1, Math.min(innerWidth / 1200, (innerHeight - 65) / 675))})`;
-      }
-      function show(n) {
-        current = Math.max(0, Math.min(slides.length - 1, n));
-        slides.forEach((s, i) => s.classList.toggle("on", i === current));
-        document.getElementById("count").textContent =
-          `${current + 1} / ${slides.length}`;
-        document.getElementById("prev").disabled = current === 0;
-        document.getElementById("next").disabled =
-          current === slides.length - 1;
-      }
-      document.getElementById("prev").onclick = () => show(current - 1);
-      document.getElementById("next").onclick = () => show(current + 1);
-      document.getElementById("full").onclick = async () => {
-        try {
-          if (document.fullscreenElement) await document.exitFullscreen();
-          else await document.documentElement.requestFullscreen();
-        } catch {
-          editor.hidden = false;
-          statusBox.textContent =
-            "Layar penuh diblokir oleh pratinjau. Buka HTML yang diunduh di browser.";
-        }
-      };
-      document.getElementById("images").onclick = () =>
-        (editor.hidden = !editor.hidden);
-      document.getElementById("close-editor").onclick = () =>
-        (editor.hidden = true);
-      addEventListener("keydown", (e) => {
-        if (!editor.hidden || /INPUT|BUTTON|TEXTAREA/.test(e.target.tagName))
-          return;
-        if (["ArrowRight", " ", "PageDown"].includes(e.key)) {
-          e.preventDefault();
-          show(current + 1);
-        }
-        if (["ArrowLeft", "PageUp"].includes(e.key)) {
-          e.preventDefault();
-          show(current - 1);
-        }
-      });
-      function dataURL(blob) {
-        return new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onload = () => resolve(reader.result);
-          reader.onerror = () =>
-            reject(new Error("Berkas tidak dapat dibaca."));
-          reader.readAsDataURL(blob);
-        });
-      }
-      async function validateImage(src) {
-        const image = new Image();
-        image.src = src;
-        await image.decode();
-      }
-      document.querySelectorAll("input[type=file]").forEach(
-        (input) =>
-          (input.onchange = async () => {
-            const file = input.files[0];
-            if (!file) return;
-            try {
-              if (
-                !["image/png", "image/jpeg", "image/webp"].includes(file.type)
-              )
-                throw new Error("Pilih gambar PNG, JPEG, atau WebP.");
-              const src = await dataURL(file);
-              await validateImage(src);
-              const img = input.dataset.target
-                ? document.getElementById(input.dataset.target)
-                : document.querySelector(input.dataset.selector);
-              img.src = src;
-              statusBox.textContent =
-                "Gambar terpasang. Unduh HTML untuk menyimpan perubahan secara permanen.";
-              if (input.dataset.target)
-                show(input.dataset.target === "login-shot" ? 2 : 3);
-            } catch (error) {
-              statusBox.textContent = error.message;
-            }
-          }),
-      );
-      document.getElementById("save").onclick = async () => {
-        const button = document.getElementById("save");
-        button.disabled = true;
-        try {
-          if (
-            !document.getElementById("login-shot").hasAttribute("src") ||
-            !document.getElementById("attendance-shot").hasAttribute("src")
-          )
-            throw new Error("Pilih kedua screenshot asli terlebih dahulu.");
-          statusBox.textContent = "Menyematkan aset gambar ke satu HTML…";
-          for (const img of document.querySelectorAll("#deck img")) {
-            if (img.src.startsWith("data:")) continue;
-            try {
-              const response = await fetch(img.src, {
-                signal: AbortSignal.timeout(12000),
-              });
-              if (!response.ok) throw new Error();
-              const blob = await response.blob();
-              const src = await dataURL(blob);
-              await validateImage(src);
-              img.src = src;
-            } catch {
-              throw new Error(
-                "Aset lama belum dapat disematkan: " +
-                  img.alt +
-                  ". Pilih berkasnya di bagian Aset lama, lalu unduh lagi. Screenshot yang sudah dipilih tetap tersimpan selama halaman ini terbuka.",
-              );
-            }
-          }
-          const clone = document.documentElement.cloneNode(true);
-          clone.querySelector("#editor").hidden = true;
-          clone
-            .querySelectorAll(".slide")
-            .forEach((slide, i) => slide.classList.toggle("on", i === 0));
-          clone.querySelector("#count").textContent = "1 / 6";
-          clone.querySelector("#save").disabled = false;
-          clone.querySelector("#status").textContent =
-            "Seluruh gambar sudah tertanam di HTML ini.";
-          const blob = new Blob(["<!doctype html>\n" + clone.outerHTML], {
-            type: "text/html;charset=utf-8",
-          });
-          const url = URL.createObjectURL(blob);
-          const link = document.createElement("a");
-          link.href = url;
-          link.download = "ruang_generus_sosialisasi.html";
-          document.body.append(link);
-          link.click();
-          link.remove();
-          setTimeout(() => URL.revokeObjectURL(url), 30000);
-          statusBox.textContent =
-            "HTML dengan seluruh gambar tertanam telah disiapkan untuk diunduh. Buka hasil unduhan untuk ditinjau sebelum commit.";
-        } catch (error) {
-          statusBox.textContent = error.message;
-        } finally {
-          button.disabled = false;
-        }
-      };
-      addEventListener("resize", fit);
-      show(0);
-      fit();
-    </script>
-  </body>
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sosialisasi Ruang Generus</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#14241a;font-family:Arial,sans-serif;color:#193328}#stage{height:100vh;display:grid;place-items:center;overflow:hidden}#deck{width:1200px;height:675px;transform-origin:center;position:relative}.slide{position:absolute;inset:0;background:#fff;border-radius:16px;padding:58px 72px;display:none;flex-direction:column;overflow:hidden}.slide.on{display:flex}.green{background:linear-gradient(130deg,#0b6639,#159052);color:white;justify-content:center}.green p,.green h1{color:white}.eyebrow{font-size:16px;letter-spacing:2px;text-transform:uppercase;color:#13834b;font-weight:bold;margin:0 0 18px}.green .eyebrow{color:#c2f2d6}h1{font-size:72px;line-height:1.05;margin:0 0 22px}h2{font-size:46px;color:#0e713f;margin:0 0 24px}h3{font-size:25px;margin:0 0 10px;color:#0e713f}p,li{font-size:25px;line-height:1.45;margin:0 0 14px}.sub{font-size:29px;max-width:900px}.muted{color:#5c7264}.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:18px}.card{background:#f0f8f3;border-radius:18px;padding:30px;min-height:220px}.card p{font-size:21px}.icon{font-size:38px;margin-bottom:16px}.split{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;flex:1}.list{padding-left:30px}.list li{margin-bottom:18px}.pill{display:inline-block;background:#e4f6e9;border-radius:40px;padding:12px 22px;font-weight:bold;color:#0b713c;font-size:23px}.footer{position:absolute;bottom:25px;left:72px;right:72px;display:flex;justify-content:space-between;gap:20px;color:#668575;font-size:15px}.green .footer{color:#c5efda}.step{display:flex;gap:20px;align-items:flex-start;margin:0 0 26px;font-size:25px;line-height:1.35}.number{flex:none;border-radius:50%;background:#118349;color:#fff;width:46px;height:46px;display:grid;place-items:center;font-weight:bold}.note{background:#fff7df;border-left:6px solid #e3a72b;padding:18px 22px;border-radius:9px;font-size:21px}.center{align-items:center;text-align:center}.center p{max-width:830px}.green .pill{background:#ffffff29;color:white}.brand{display:flex;align-items:center;gap:13px;margin-bottom:42px;color:white;font-size:29px;letter-spacing:2px}.brand-logo{width:76px;height:76px;object-fit:contain;border-radius:50%;background:white;padding:3px}.screenshot{height:490px;width:245px;margin:auto;overflow:hidden;border:7px solid #193328;border-radius:27px;box-shadow:0 20px 35px #0003;background:white}.screenshot img{display:block;width:100%;height:100%;object-fit:contain}
+/* Penyesuaian lokal: gambar utuh tanpa bingkai ponsel tambahan. */
+.slide.intro .screenshot{height:420px;width:210px}.demo{padding-top:42px}.demo h2{font-size:42px;margin-bottom:18px}.demo .eyebrow{margin-bottom:12px}.demo .split{grid-template-columns:minmax(0,1fr) 290px;gap:44px;flex:none;height:470px}.demo .step{font-size:24px;margin-bottom:22px}.demo .note{font-size:20px}.real-shot{width:260px;height:470px;margin:0 auto;border:0;border-radius:0;background:transparent;box-shadow:none;position:relative;display:grid;place-items:center}.real-shot img{height:100%;width:100%;object-fit:contain;filter:drop-shadow(0 8px 10px #0002)}.real-shot img:not([src]){display:none}.missing{width:240px;border:2px dashed #96b5a3;border-radius:18px;padding:28px 20px;text-align:center;background:#f0f8f3;color:#426951;font-size:19px;line-height:1.5}.missing strong{display:block;margin-bottom:12px}.real-shot:has(img[src]) .missing{display:none}.review-note{font-size:15px;margin-top:12px}
+#controls{position:fixed;bottom:10px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:12px;color:#fff;font-size:14px;white-space:nowrap}button{border:0;border-radius:8px;padding:9px 15px;cursor:pointer;background:#ffffff30;color:#fff;font-size:18px}button:disabled{opacity:.35;cursor:default}button:focus-visible{outline:3px solid #e3a72b}#editor{position:fixed;inset:20px 20px auto auto;width:min(440px,calc(100vw - 40px));padding:24px;background:white;color:#193328;box-shadow:0 10px 60px #0008;border-radius:16px;z-index:5;font-size:16px;max-height:85vh;overflow:auto}#editor[hidden]{display:none}#editor p{font-size:16px}#editor label{display:block;margin:15px 0}#editor input{display:block;margin-top:8px;max-width:100%}#editor button{background:#0e713f;margin:4px 0;font-size:16px}#status{font-size:14px;line-height:1.5;margin-top:12px}
+@media print{@page{size:1200px 675px;margin:0}body{background:white}#controls,#editor{display:none!important}#stage{height:auto;display:block}#deck{transform:none!important;height:auto}.slide{position:relative;display:flex!important;width:1200px;height:675px;border-radius:0;break-after:page;print-color-adjust:exact;-webkit-print-color-adjust:exact}}
+/* Tata letak layar: teks mengalir mengikuti perangkat, tanpa mengecilkan seluruh slide. */
+@media screen {
+html{overflow-x:hidden}body{overflow-wrap:break-word}
+#stage{height:auto;min-height:100vh;min-height:100dvh;display:block;overflow:visible;padding:24px 24px calc(100px + env(safe-area-inset-bottom))}
+#deck{width:100%;max-width:1200px;height:auto;margin:0 auto;transform:none!important}
+.slide{position:relative;inset:auto;min-height: min(675px,calc(100dvh - 124px));height:auto;overflow:visible;padding:clamp(28px,4vw,58px) clamp(24px,5vw,72px)}
+.slide.green{min-height:calc(100vh - 124px);min-height:calc(100dvh - 124px)}
+h1{font-size:clamp(40px,5.5vw,72px);line-height:1.12}h2,.demo h2{font-size:clamp(28px,3.5vw,46px);line-height:1.2}h3{font-size:clamp(21px,2vw,25px)}
+p,li,.step,.demo .step{font-size:clamp(18px,2vw,25px);line-height:1.5}.sub{font-size:clamp(21px,2.5vw,29px)}
+.split,.demo .split{grid-template-columns:minmax(0,1fr) minmax(210px,290px);gap:clamp(24px,4vw,48px);height:auto;flex:1}.split>div{min-width:0}
+.footer{position:static;margin-top:32px;padding-top:18px;align-items:flex-end;font-size:14px;width:100%}.footer span:last-child{white-space:nowrap;margin-left:auto}
+.real-shot{max-width:100%;width:260px;height:auto;aspect-ratio:351 / 724}.real-shot img{width:100%;height:auto;max-height:none;object-fit:contain}
+.slide.intro .screenshot{max-width:100%;flex-shrink:0}.note,.demo .note{font-size:clamp(17px,1.7vw,21px)}.pill{font-size:clamp(17px,1.9vw,23px);max-width:100%;line-height:1.5}
+.cards{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.card{padding:24px;min-height:0}.card p{font-size:18px}
+#controls{z-index:4;bottom:calc(12px + env(safe-area-inset-bottom));background:#142c20f5;border:1px solid #ffffff30;border-radius:16px;padding:8px;gap:10px;box-shadow:0 6px 24px #0003;max-width:calc(100% - 20px)}
+#controls button{min-width:44px;min-height:44px;padding:8px 12px;touch-action:manipulation}#count{min-width:42px;text-align:center}
+#editor{max-height:calc(100dvh - 40px);overscroll-behavior:contain}#editor button{min-height:44px}#editor input{font-size:16px}
+}
+@media screen and (max-width:900px){
+#stage{padding:16px 16px calc(100px + env(safe-area-inset-bottom))}.slide{padding:32px}.eyebrow{font-size:13px;line-height:1.6;letter-spacing:1.5px}.step,.demo .step{gap:14px;margin-bottom:20px}.number{width:38px;height:38px}.brand{margin-bottom:30px}.cards{grid-template-columns:1fr}.card{display:block}.icon{margin-bottom:10px}.real-shot{width:240px}.demo .split,.split{grid-template-columns:minmax(0,1fr) 240px;gap:24px}
+}
+@media screen and (max-width:640px){
+#stage{padding:10px 10px calc(96px + env(safe-area-inset-bottom))}.slide,.demo{padding:28px 20px;border-radius:14px}.slide.green{min-height:calc(100dvh - 116px)}
+.split,.demo .split{grid-template-columns:minmax(0,1fr);gap:28px;flex:none}.slide.intro .screenshot{width:230px;height:460px}.real-shot{width:min(100%,290px);margin:0 auto}
+h1{font-size:clamp(34px,9vw,48px)}h2,.demo h2{font-size:29px;margin-bottom:24px}.sub{font-size:21px}.brand{font-size:24px;gap:12px}.brand-logo{width:60px;height:60px}.step,.demo .step{font-size:18px}.number{width:34px;height:34px;font-size:18px}.note,.demo .note{padding:16px}.review-note{font-size:14px}.footer{font-size:12px;gap:12px;margin-top:26px;line-height:1.5}.center .pill[lang=ar]{font-size:clamp(22px,6vw,30px)!important;padding:12px 16px}.center h1 br{display:none}#controls{gap:6px}#controls button{font-size:17px;padding:8px 10px}#editor{inset:10px 10px auto;width:calc(100% - 20px);max-height:calc(100dvh - 20px);padding:20px}
+}
+</style>
+</head>
+<body>
+<div id="stage"><main id="deck">
+<section class="slide green on">
+<div class="brand"><img class="brand-logo" src="https://storage.googleapis.com/dall-e-images/E3G90xa7WyXFqQ1RIKb6wLoM8qB2%2F569bae39-bd1c-47fd-b72d-bebc39a51b9b.png" alt="Logo LDII"><strong>LDII</strong></div>
+<div class="eyebrow">Sosialisasi web app · LDII Kelompok 5 Tambun</div><h1>Ruang Generus</h1>
+<p class="sub">Memudahkan sambung jama'ah melalui jadwal dan presensi pengajian rutin, menuju kegiatan yang lebih tertata di era digital.</p>
+<div class="footer"><span>Dikembangkan oleh Tim 4S Desa</span><span>01 / 06</span></div>
+</section>
+<section class="slide intro">
+<div class="eyebrow">Perkenalan</div><h2>Satu tempat untuk kegiatan kita</h2>
+<div class="split"><div><p><strong>Ruang Generus</strong> adalah website yang dibangun oleh <strong>Tim 4S Desa</strong> untuk mendukung kegiatan jama'ah secara digital.</p><p class="muted">Dapat diakses melalui ponsel; tampilan di samping mengacu pada aplikasi Satu Generus.</p><span class="pill">Fokus: jadwal • presensi • informasi kegiatan</span></div>
+<div class="screenshot"><img src="https://storage.googleapis.com/dall-e-images/E3G90xa7WyXFqQ1RIKb6wLoM8qB2%2Fcc4d03ea-084c-425f-801a-6fc7d136d727.png" alt="Tampilan aplikasi Satu Generus: menu presensi, keluarga dan ringkasan bulan ini"></div></div>
+<div class="footer"><span>Ilustrasi ulang dari tangkapan layar; data pribadi perlu disamarkan sebelum ditampilkan umum.</span><span>02 / 06</span></div>
+</section>
+<section class="slide demo">
+<div class="eyebrow">Demo alur</div><h2>Cara menggunakan: langkah awal</h2>
+<div class="split"><div>
+<div class="step"><span class="number">1</span><span>Buka browser, lalu ketik <strong>satugenerus.com</strong>.</span></div>
+<div class="step"><span class="number">2</span><span><strong>Kepala keluarga</strong> masuk dengan email atau nomor telepon yang tercatat dalam sensus jama'ah.</span></div>
+<div class="step"><span class="number">3</span><span>Masukkan password awal <strong>yang telah diberikan</strong>, kemudian klik <strong>Masuk ke Akun</strong>.</span></div>
+<div class="note">Setelah masuk, buka <strong>Beranda</strong> untuk melihat jadwal pengajian.</div>
+</div><div class="screenshot real-shot"><img id="login-shot" src="./satugenerus.com_2026-11-21_00-58-28.png" onerror="if(!this.dataset.fallback){this.dataset.fallback='1';this.src='https://raw.githubusercontent.com/ayyunnan/rugen/HEAD/satugenerus.com_2026-11-21_00-58-28.png';}" alt="Tangkapan layar asli halaman login Satu Generus"><div class="missing"><strong>Screenshot login belum disematkan</strong>Pilih berkas asli <b>1.png</b> melalui tombol Gambar.</div></div></div>
+<div class="footer"><span>Akses akun hanya untuk kepala keluarga.</span><span>03 / 06</span></div>
+</section>
+<section class="slide demo">
+<div class="eyebrow">Demo alur</div><h2>Presensi &amp; ringkasan kehadiran</h2>
+<div class="split"><div>
+<div class="step"><span class="number">1</span><span>Buka menu <strong>Presensi</strong> untuk pengajian yang berlangsung.</span></div>
+<div class="step"><span class="number">2</span><span>Catat status: <strong>Hadir</strong>, <strong>Izin</strong>, atau <strong>Sakit</strong>.</span></div>
+<div class="step"><span class="number">3</span><span>Kepala keluarga dapat mengajukan izin untuk anggota keluarga yang berhalangan hadir.</span></div>
+<div class="note"><strong>Pantau kehadiran</strong><br>Periksa catatan presensi dan <strong>ringkasan kehadiran</strong> melalui website.</div>
+<p class="muted review-note">Saat demo, jangan tampilkan identitas maupun data pribadi jama'ah.</p>
+</div><div class="screenshot real-shot"><img id="attendance-shot" src="./satugenerus.com_2026-11-21_02-05-52.png" onerror="if(!this.dataset.fallback){this.dataset.fallback='1';this.src='https://raw.githubusercontent.com/ayyunnan/rugen/HEAD/satugenerus.com_2026-11-21_02-05-52.png';}" alt="Tangkapan layar asli halaman Presensi Pengajian Satu Generus"><div class="missing"><strong>Screenshot presensi belum disematkan</strong>Pilih berkas asli <b>2.png</b> melalui tombol Gambar.</div></div></div>
+<div class="footer"><span>Pilih status sesuai keadaan sebenarnya.</span><span>04 / 06</span></div>
+</section>
+<section class="slide">
+<div class="eyebrow">Ajakan bersama</div><h2>Mulai dari langkah kecil</h2>
+<div class="cards"><div class="card"><div class="icon">👤</div><h3>Kepala keluarga</h3><p>Masuk ke website, cek jadwal, dan bantu catat izin keluarga yang berhalangan.</p></div><div class="card"><div class="icon">🙋</div><h3>Pengurus</h3><p>Dampingi yang belum terbiasa dan bantu jika ada kendala penggunaan.</p></div><div class="card"><div class="icon">🛠️</div><h3>Tim 4S Desa</h3><p>Terima masukan agar aplikasi terus lebih bermanfaat bagi jama'ah.</p></div></div>
+<div class="footer"><span>Digitalisasi berhasil jika digunakan bersama-sama.</span><span>05 / 06</span></div>
+</section>
+<section class="slide green center"><div class="eyebrow">Penutup</div><h1>Mari sambung jama'ah,<br>lebih mudah dan tertata.</h1><span class="pill" lang="ar" dir="rtl" style="font-size:32px;margin-top:26px">الحمد لله جزاكم الله خيرا</span><div class="footer"><span>LDII Kelompok 5 Tambun · Tim 4S Desa</span><span>06 / 06</span></div></section>
+</main></div>
+<div id="controls"><button id="prev" aria-label="Slide sebelumnya">←</button><span id="count">1 / 6</span><button id="next" aria-label="Slide berikutnya">→</button><button id="full" aria-label="Layar penuh">⛶</button><button id="images">Gambar</button></div>
+<aside id="editor" hidden aria-label="Sematkan gambar asli">
+<h3>Screenshot asli</h3><p>Slide 3 dan 4 memakai berkas PNG dari repositori ayyunnan/rugen. Simpan HTML di folder yang sama dengan kedua gambar. Pemilih berkas di bawah hanya diperlukan jika ingin mengganti gambar atau menyematkannya untuk penggunaan luring.</p>
+<label>Slide 3 — login<input type="file" accept="image/png,image/jpeg,image/webp" data-target="login-shot"></label>
+<label>Slide 4 — presensi<input type="file" accept="image/png,image/jpeg,image/webp" data-target="attendance-shot"></label>
+<details><summary>Aset lama: logo &amp; ilustrasi slide 2</summary><p>Saat ekspor, gambar lama dicoba disematkan otomatis. Jika akses sumber diblokir, pilih salinan gambar aslinya di sini agar hasil tetap mandiri.</p><label>Logo cover<input type="file" accept="image/png,image/jpeg,image/webp" data-selector=".brand-logo"></label><label>Ilustrasi slide 2<input type="file" accept="image/png,image/jpeg,image/webp" data-selector=".intro img"></label></details>
+<p>Screenshot presensi memuat nama jama'ah. Pastikan izin publikasinya sebelum commit ke repositori publik.</p>
+<button id="save">Unduh HTML dengan gambar tertanam</button> <button id="close-editor">Tutup</button><div id="status" role="status" aria-live="polite">Screenshot sudah ditautkan ke berkas PNG repositori, bukan ditanam sebagai data biner. Logo dan ilustrasi lama tetap memakai URL asal. Tidak perlu memilih gambar lagi untuk publikasi GitHub Pages.</div>
+</aside>
+<script>
+const deck=document.getElementById('deck'),slides=[...document.querySelectorAll('.slide')];let current=0;
+const editor=document.getElementById('editor'),statusBox=document.getElementById('status');
+function fit(){deck.style.removeProperty('transform');}
+function show(n){current=Math.max(0,Math.min(slides.length-1,n));slides.forEach((s,i)=>s.classList.toggle('on',i===current));document.getElementById('count').textContent=`${current+1} / ${slides.length}`;document.getElementById('prev').disabled=current===0;document.getElementById('next').disabled=current===slides.length-1;window.scrollTo({top:0,left:0,behavior:'instant'});}
+document.getElementById('prev').onclick=()=>show(current-1);document.getElementById('next').onclick=()=>show(current+1);
+document.getElementById('full').onclick=async()=>{try{if(document.fullscreenElement)await document.exitFullscreen();else await document.documentElement.requestFullscreen();}catch{editor.hidden=false;statusBox.textContent='Layar penuh diblokir oleh pratinjau. Buka HTML yang diunduh di browser.';}};
+document.getElementById('images').onclick=()=>editor.hidden=!editor.hidden;document.getElementById('close-editor').onclick=()=>editor.hidden=true;
+addEventListener('keydown',e=>{if(!editor.hidden||/INPUT|BUTTON|TEXTAREA/.test(e.target.tagName))return;if(['ArrowRight',' ','PageDown'].includes(e.key)){e.preventDefault();show(current+1);}if(['ArrowLeft','PageUp'].includes(e.key)){e.preventDefault();show(current-1);}});
+function dataURL(blob){return new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=()=>reject(new Error('Berkas tidak dapat dibaca.'));reader.readAsDataURL(blob);});}
+async function validateImage(src){const image=new Image();image.src=src;await image.decode();}
+document.querySelectorAll('input[type=file]').forEach(input=>input.onchange=async()=>{const file=input.files[0];if(!file)return;try{if(!['image/png','image/jpeg','image/webp'].includes(file.type))throw new Error('Pilih gambar PNG, JPEG, atau WebP.');const src=await dataURL(file);await validateImage(src);const img=input.dataset.target?document.getElementById(input.dataset.target):document.querySelector(input.dataset.selector);img.src=src;statusBox.textContent='Gambar terpasang. Unduh HTML untuk menyimpan perubahan secara permanen.';if(input.dataset.target)show(input.dataset.target==='login-shot'?2:3);}catch(error){statusBox.textContent=error.message;}});
+document.getElementById('save').onclick=async()=>{
+const button=document.getElementById('save');button.disabled=true;
+try{
+if(!document.getElementById('login-shot').hasAttribute('src')||!document.getElementById('attendance-shot').hasAttribute('src'))throw new Error('Pilih kedua screenshot asli terlebih dahulu.');
+statusBox.textContent='Menyematkan aset gambar ke satu HTML…';
+for(const img of document.querySelectorAll('#deck img')){
+if(img.src.startsWith('data:'))continue;
+try{const response=await fetch(img.src,{signal:AbortSignal.timeout(12000)});if(!response.ok)throw new Error();const blob=await response.blob();const src=await dataURL(blob);await validateImage(src);img.src=src;}catch{throw new Error('Aset lama belum dapat disematkan: '+img.alt+'. Pilih berkasnya di bagian Aset lama, lalu unduh lagi. Screenshot yang sudah dipilih tetap tersimpan selama halaman ini terbuka.');}}
+const clone=document.documentElement.cloneNode(true);clone.querySelector('#editor').hidden=true;clone.querySelectorAll('.slide').forEach((slide,i)=>slide.classList.toggle('on',i===0));clone.querySelector('#count').textContent='1 / 6';clone.querySelector('#save').disabled=false;clone.querySelector('#status').textContent='Seluruh gambar sudah tertanam di HTML ini.';
+const blob=new Blob(['<!doctype html>\n'+clone.outerHTML],{type:'text/html;charset=utf-8'});const url=URL.createObjectURL(blob);const link=document.createElement('a');link.href=url;link.download='ruang_generus_sosialisasi.html';document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),30000);statusBox.textContent='HTML dengan seluruh gambar tertanam telah disiapkan untuk diunduh. Buka hasil unduhan untuk ditinjau sebelum commit.';
+}catch(error){statusBox.textContent=error.message;}finally{button.disabled=false;}
+};
+addEventListener('resize',fit);show(0);fit();
+</script>
+</body>
 </html>
